@@ -8,5 +8,7 @@ pub enum Command {
     #[command(description = "Display this text.")]
     Help,
     #[command(description = "Ping message.")]
-    Ping
+    Ping,
+    #[command(description = "Shows your id and chat id.")]
+    Itg
 }

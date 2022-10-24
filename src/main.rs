@@ -1,5 +1,5 @@
 use dotenv::dotenv;
-use teloxide::{prelude::*, utils::command::BotCommands};
+use teloxide::{prelude::*, utils::command::BotCommands, types::ParseMode};
 pub use commands::Command;
 pub use ap_env::get_env_variable;
 
@@ -20,11 +20,31 @@ async fn main() {
     teloxide::commands_repl(bot, answer, Command::ty()).await;
 }
 
-async fn answer(bot: Bot, msg: Message, cmd: Command) -> ResponseResult<()> {
+async fn answer(bot: Bot, message: Message, cmd: Command) -> ResponseResult<()> {
     match cmd {
-        Command::Start => bot.send_message(msg.chat.id, "Hi there!\nUse /help to see my commands").await?,
-        Command::Help => bot.send_message(msg.chat.id, Command::descriptions().to_string()).await?,
-        Command::Ping => bot.send_message(msg.chat.id, "Pong!").await?
+        Command::Start => 
+            bot.send_message(
+                message.chat.id,
+                 "Hi there!\nUse /help to see my commands"
+                ).await?,
+        Command::Help => 
+            bot.send_message(
+                message.chat.id,
+                 Command::descriptions().to_string()
+                ).await?,
+        Command::Ping => 
+            bot.send_message(
+                message.chat.id,
+                 "Pong!"
+            ).await?,
+        Command::Itg => 
+            bot.send_message(
+                message.chat.id, 
+                format!(
+                    "Your id: `{}`\nChat id: `{}`",
+                    message.from().unwrap().id,
+                    message.chat.id)
+                ).parse_mode(ParseMode::MarkdownV2).await?
     };
 
     Ok(())
