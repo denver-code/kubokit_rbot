@@ -9,6 +9,8 @@ pub enum Command {
     Help,
     #[command(description = "Ping message.")]
     Ping,
+    #[command(description = "Same as ping.")]
+    Iping,
     #[command(description = "Shows your id and chat id.")]
     Itg,
     #[command(description = "Technical info about bot.")]

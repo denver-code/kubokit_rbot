@@ -1,17 +1,8 @@
 use dotenv::dotenv;
-use internal::commands::{itg_event, idevelop_event};
 use teloxide::{prelude::*, utils::command::BotCommands};
-pub use commands::Command;
-pub use ap_env::get_env_variable;
 
-#[path = "./architecture/commands.rs"]
-mod commands;
-
-#[path = "./lib/ap_env.rs"]
-mod ap_env;
-
-pub use internal::*;
-mod internal;
+use kubokit_rbot::{util, architecture::commands::Command};
+use kubokit_rbot::internal::commands::{idevelop_event::idevelop_event, itg_event::itg_event};
 
 #[tokio::main]
 async fn main() {
@@ -19,7 +10,7 @@ async fn main() {
     pretty_env_logger::init();
     log::info!("Starting command bot...");
 
-    let bot = Bot::new(get_env_variable("BOT_TOKEN".to_string()));
+    let bot = Bot::new(util::ap_env::get_env_variable("BOT_TOKEN".to_string()));
 
     teloxide::commands_repl(bot, command_handler_event, Command::ty()).await;
 }
@@ -38,7 +29,7 @@ async fn command_handler_event(bot: Bot, message: Message, cmd: Command) -> Resp
                  Command::descriptions().to_string()
                 ).await?;
         },
-        Command::Ping => {
+        Command::Ping | Command::Iping => {
             bot.send_message(
                 message.chat.id,
                  "Pong!"

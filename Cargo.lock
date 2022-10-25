@@ -559,7 +559,7 @@ dependencies = [
 
 [[package]]
 name = "kubokit_rbot"
-version = "0.1.0"
+version = "1.4.0"
 dependencies = [
  "dotenv",
  "dotenv_codegen",
