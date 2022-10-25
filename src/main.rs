@@ -1,5 +1,5 @@
 use dotenv::dotenv;
-use internal::commands::itg_event;
+use internal::commands::{itg_event, idevelop_event};
 use teloxide::{prelude::*, utils::command::BotCommands};
 pub use commands::Command;
 pub use ap_env::get_env_variable;
@@ -44,7 +44,8 @@ async fn command_handler_event(bot: Bot, message: Message, cmd: Command) -> Resp
                  "Pong!"
             ).await?;
         },
-        Command::Itg => itg_event(bot, message).await?
+        Command::Itg => itg_event(bot, message).await?,
+        Command::Idevelop => idevelop_event(bot, message).await?
     };
 
     Ok(())
